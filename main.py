@@ -1,3 +1,12 @@
+#this class is used for creating contacts
+class Contact:
+
+    #this sets up the details for each new contact
+    def __init__(self, name, number, email):
+        self.name = name
+        self.number = number
+        self.email = email
+
 contacts = [] #creates an empty list to store contacts
 
 #this function will ask the user for the contact details and saves new contacts
@@ -16,17 +25,14 @@ def add_contacts():
 
     #checks if a contact already exists with the same name
     for contact in contacts:
-        if contact["name"].lower() == name.lower():
+        if contact.name.lower() == name.lower():
             print("Contact with this name already exists.")
             return
 
 
-    #stores details in a dictionary and each detail has a key name, number, and email
-    contact = {
-        "name": name,
-        "number": number,
-        "email": email
-    }
+    #creates a new contact object with the provided details
+    contact = Contact(name, number, email)
+
     #adds the new contact to the contact list
     contacts.append(contact)
     print("Contact Details Have Been Added")
@@ -41,9 +47,9 @@ def view_contacts(): #this function displays the saved contacts in the list
     
     for contact in contacts:
 
-        print("Name: ", contact["name"])
-        print("Number: ", contact["number"])
-        print("Email: ", contact["email"])
+        print("Name: ", contact.name)
+        print("Number: ", contact.number)
+        print("Email: ", contact.email)
     #this display each piece of information
 
 #this function searches for a contact using their name
@@ -59,11 +65,11 @@ def search_contact():
     for contact in contacts:
 
         #compares names without having to worry about capital letters
-        if search_name.lower() in contact["name"].lower():
+        if search_name.lower() in contact.name.lower():
 
-            print("Name", contact["name"])
-            print("Number", contact["number"])
-            print("Email", contact["email"])
+            print("Name", contact.name)
+            print("Number", contact.number)
+            print("Email", contact.email)
 
             found = True
     #displays a message if the contact was not found
@@ -78,7 +84,7 @@ def edit_contacts(): #this function allows the user to edit an existing contact
 
     for contact in contacts:
 
-        if contact["name"].lower() == search_name.lower():
+        if contact.name.lower() == search_name.lower():
 
             print("Leave a field blank if you would like to keep the current detail.")
 
@@ -90,11 +96,11 @@ def edit_contacts(): #this function allows the user to edit an existing contact
 
             #updates only the fields that habe new details
             if new_name:
-                contact["name"] = new_name
+                contact.name = new_name
             if new_number:
-                contact["number"] = new_number
+                contact.number = new_number
             if new_email:
-                contact["email"] = new_email
+                contact.email = new_email
                 
             print("Contact details have been updated.")
             return
@@ -109,7 +115,7 @@ def delete_contact():
 
     for contact in contacts:
         #runs a check to see if the name matches 
-        if contact["name"].lower() == search_name.lower():
+        if contact.name.lower() == search_name.lower():
 
             #removes the matching name from the contact list
             contacts.remove(contact)
