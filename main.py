@@ -32,6 +32,30 @@ def view_contacts(): #this function displays the saved contacts in the list
         print("Email: ", contact["email"])
     #this display each piece of information
 
+#this function searches for a contact using their name
+def search_contact():
+
+    #asks the user to enter the name they want to look for
+    search_name = input("Enter the name that you would like to search for:").strip()
+
+    #keeps track of whether a contact was found or not
+    found = False
+
+    #checks contacts in the contact list
+    for contact in contacts:
+
+        #compares names without having to worry about capital letters
+        if search_name.lower() in contact["name"].lower():
+
+            print("Name", contact["name"])
+            print("Number", contact["number"])
+            print("Email", contact["email"])
+
+            found = True
+    #displays a message if the contact was not found
+    if not found:
+        print("Contact not found.")
+
 #this function runs the program
 def main():
 
@@ -40,7 +64,8 @@ def main():
         print("1. Add Contact")
         print("2. View Contacts")
         print("3. Exit")
-
+        print("4. Search Contact")
+        
         #asks the user to enter their choice
         choice = input("Enter your choice: ")
 
@@ -52,6 +77,8 @@ def main():
         elif choice == "3":
             print("Exiting the program...")
             break
+        elif choice == "4":
+            search_contact()
         else:
             print("Invalid choice. Please try again.")
 
