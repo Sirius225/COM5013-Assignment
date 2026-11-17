@@ -34,9 +34,26 @@ def view_contacts(): #this function displays the saved contacts in the list
 
 #this function runs the program
 def main():
-    print("Welcome To The Contacts App")
-    add_contacts() #runs function that adds contacts
-    view_contacts() # runs function that displays the contacts
+
+    #keeps the menu displayed until the user makes a choice
+    while True:
+        print("1. Add Contact")
+        print("2. View Contacts")
+        print("3. Exit")
+
+        #asks the user to enter their choice
+        choice = input("Enter your choice: ")
+
+        #runs the relevant function based on the user's choice
+        if choice == "1":
+            add_contacts()
+        elif choice == "2":
+            view_contacts()
+        elif choice == "3":
+            print("Exiting the program...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
 
 if __name__ == "__main__":
     main()
