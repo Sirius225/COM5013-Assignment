@@ -1,163 +1,192 @@
-#this class is used for creating contacts
+
+# this class is used for creating contacts
 class Contact:
 
-    #this sets up the details for each new contact
+    # this sets up the details for each new contact
     def __init__(self, name, number, email):
         self.name = name
         self.number = number
         self.email = email
 
-contacts = [] #creates an empty list to store contacts
 
-#this function will ask the user for the contact details and saves new contacts
-def add_contacts(): 
+# this class will manage all contacts in the app
+class ContactManager:
 
-    #asks the user to enter details 
-    name = input("Enter Contacts Name: ").strip()
-    number = input("Enter Phone Number: ").strip()
-    email = input("Enter Email: ").strip()
+    # this will initialise an empty list to store contacts
+    def __init__(self):
+        self.contacts = []
 
-    #checks that none of the fields are empty
-    if not name or not number or not email:
-        print("All fields are required. Please Try again.")
-        return
+    # this function will ask the user for contact details and save new contacts
+    def add_contacts(self):
 
+        # asks the user to enter details
+        name = input("Enter Contacts Name: ").strip()
+        number = input("Enter Phone Number: ").strip()
+        email = input("Enter Email: ").strip()
 
-    #checks if a contact already exists with the same name
-    for contact in contacts:
-        if contact.name.lower() == name.lower():
-            print("Contact with this name already exists.")
+        # checks that none of the fields are empty
+        if not name or not number or not email:
+            print("All fields are required. Please try again.")
             return
 
+        # checks if a contact already exists with the same name
+        for contact in self.contacts:
+            if contact.name.lower() == name.lower():
+                print("Contact with this name already exists.")
+                return
 
-    #creates a new contact object with the provided details
-    contact = Contact(name, number, email)
+        # creates a new contact object with the provided details
+        contact = Contact(name, number, email)
 
-    #adds the new contact to the contact list
-    contacts.append(contact)
-    print("Contact Details Have Been Added")
+        # adds the new contact to the contact list
+        self.contacts.append(contact)
+        print("Contact Details Have Been Added")
 
-def view_contacts(): #this function displays the saved contacts in the list
+    # this function displays the saved contacts in the list
+    def view_contacts(self):
 
+        # checks whether the contacts list is empty
+        if not self.contacts:
+            print("No contacts have been saved yet.")
+            return
 
-    if not contacts:
-        print("No contacts have been saved yet")
-        return 
-        #this will stop the function if there are not contacts
-    
-    for contact in contacts:
+        # goes through each contact in the list
+        for contact in self.contacts:
+            print("\nName:", contact.name)
+            print("Number:", contact.number)
+            print("Email:", contact.email)
 
-        print("Name: ", contact.name)
-        print("Number: ", contact.number)
-        print("Email: ", contact.email)
-    #this display each piece of information
+        # this displays each piece of information
 
-#this function searches for a contact using their name
-def search_contact():
+    # this function searches for a contact using their name
+    def search_contact(self):
 
-    #asks the user to enter the name they want to look for
-    search_name = input("Enter the name that you would like to search for:").strip()
+        # asks the user to enter the name they want to look for
+        search_name = input("Enter the name that you would like to search for: ").strip()
 
-    #keeps track of whether a contact was found or not
-    found = False
+        # keeps track of whether a contact was found or not
+        found = False
 
-    #checks contacts in the contact list
-    for contact in contacts:
+        # checks contacts in the contact list
+        for contact in self.contacts:
 
-        #compares names without having to worry about capital letters
-        if search_name.lower() in contact.name.lower():
+            # compares names without worrying about capital letters
+            if search_name.lower() in contact.name.lower():
 
-            print("Name", contact.name)
-            print("Number", contact.number)
-            print("Email", contact.email)
+                print("\nName:", contact.name)
+                print("Number:", contact.number)
+                print("Email:", contact.email)
 
-            found = True
-    #displays a message if the contact was not found
-    if not found:
+                found = True
+
+        # displays a message if the contact was not found
+        if not found:
+            print("Contact not found.")
+
+    # this function allows the user to edit an existing contact
+    def edit_contacts(self):
+
+        # asks which contact the user wants to edit
+        search_name = input("Enter the name of the contact you would like to edit: ").strip()
+
+        # checks each contact in the list
+        for contact in self.contacts:
+
+            if contact.name.lower() == search_name.lower():
+
+                print("Leave a field blank if you would like to keep the current detail.")
+
+                # asks for updated details
+                new_name = input("Enter new name: ").strip()
+                new_number = input("Enter new number: ").strip()
+                new_email = input("Enter new email: ").strip()
+
+                # checks whether the new name is already being used
+                if new_name:
+                    for other_contact in self.contacts:
+                        if other_contact is not contact and other_contact.name.lower() == new_name.lower():
+                            print("Another contact already uses this name.")
+                            return
+
+                    contact.name = new_name
+
+                # updates only the fields that have new details
+                if new_number:
+                    contact.number = new_number
+
+                if new_email:
+                    contact.email = new_email
+
+                print("Contact details have been updated.")
+                return
+
+        # displays a message if the contact was not found
         print("Contact not found.")
 
-def edit_contacts(): #this function allows the user to edit an existing contact
+    # this function will allow the user to delete a contact from the list
+    def delete_contact(self):
+
+        # asks the user to enter the name of the contact they want to delete
+        search_name = input("Enter the name of the contact that you would like to delete: ").strip()
+
+        # checks each contact in the list
+        for contact in self.contacts:
+
+            # runs a check to see if the name matches
+            if contact.name.lower() == search_name.lower():
+
+                # removes the matching contact from the contact list
+                self.contacts.remove(contact)
+                print("Contact has been deleted.")
+                return
+
+        print("Contact not found.")
 
 
-    #asks which contact detail the user wants to edit
-    search_name = input("Enter the name of the contact you would like to edit:").strip()
-
-    for contact in contacts:
-
-        if contact.name.lower() == search_name.lower():
-
-            print("Leave a field blank if you would like to keep the current detail.")
-
-            #asks for updated details
-            new_name = input("Enter new name: ").strip()
-            new_number = input("Enter new number: ").strip()
-            new_email = input("Enter new email: ").strip()
-
-
-            #updates only the fields that habe new details
-            if new_name:
-                contact.name = new_name
-            if new_number:
-                contact.number = new_number
-            if new_email:
-                contact.email = new_email
-                
-            print("Contact details have been updated.")
-            return
-        
-print("Contact not found.")
-
-#this function will allow the user to delete a contact from the list
-def delete_contact(): 
-
-    #asks the user to enter the name of the contact they want to delete
-    search_name = input("Enter the name of the contact that you would like to delete: ").strip()
-
-    for contact in contacts:
-        #runs a check to see if the name matches 
-        if contact.name.lower() == search_name.lower():
-
-            #removes the matching name from the contact list
-            contacts.remove(contact)
-            print("Contact has been deleted.")
-            return
-
-    print("Contact not found.")
-
-
-
-
-
-#this function runs the program
+# this function runs the program
 def main():
 
-    #keeps the menu displayed until the user makes a choice
+    # creates a ContactManager object to manage all contacts
+    manager = ContactManager()
+
+    # keeps the menu displayed until the user makes a choice
     while True:
+
+        print("CONTACTS MANAGEMENT APP")
         print("1. Add Contact")
         print("2. View Contacts")
         print("3. Search Contact")
         print("4. Edit Contact")
         print("5. Delete Contact")
         print("6. Exit")
-        #asks the user to enter their choice
+
+        # asks the user to enter their choice
         choice = input("Enter your choice: ")
 
-        #runs the relevant function based on the user's choice
+        # runs the relevant function based on the user's choice
         if choice == "1":
-            add_contacts()
+            manager.add_contacts()
+
         elif choice == "2":
-            view_contacts()
+            manager.view_contacts()
+
         elif choice == "3":
-            search_contact()
+            manager.search_contact()
+
         elif choice == "4":
-            edit_contacts()
+            manager.edit_contacts()
+
         elif choice == "5":
-            delete_contact()
+            manager.delete_contact()
+
         elif choice == "6":
             print("Exiting the program...")
             break
+
         else:
             print("Invalid choice. Please try again.")
 
+
 if __name__ == "__main__":
     main()
+
