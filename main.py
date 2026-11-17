@@ -88,6 +88,26 @@ def edit_contacts(): #this function allows the user to edit an existing contact
         
 print("Contact not found.")
 
+#this function will allow the user to delete a contact from the list
+def delete_contact(): 
+
+    #asks the user to enter the name of the contact they want to delete
+    search_name = input("Enter the name of the contact that you would like to delete: ").strip()
+
+    for contact in contacts:
+        #runs a check to see if the name matches 
+        if contact["name"].lower() == search_name.lower():
+
+            #removes the matching name from the contact list
+            contacts.remove(contact)
+            print("Contact has been deleted.")
+            return
+
+    print("Contact not found.")
+
+
+
+
 
 #this function runs the program
 def main():
@@ -99,6 +119,7 @@ def main():
         print("3. Exit")
         print("4. Search Contact")
         print("5. Edit Contact")
+        print("6. Delete Contact")
         #asks the user to enter their choice
         choice = input("Enter your choice: ")
 
@@ -114,6 +135,8 @@ def main():
             search_contact()
         elif choice == "5":
             edit_contacts()
+        elif choice == "6":
+            delete_contact()
         else:
             print("Invalid choice. Please try again.")
 
