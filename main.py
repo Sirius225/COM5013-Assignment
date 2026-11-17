@@ -4,9 +4,16 @@ contacts = [] #creates an empty list to store contacts
 def add_contacts(): 
 
     #asks the user to enter details 
-    name = input("Enter Contacts Name: ")
-    number = input("Enter Phone Number: ")
-    email = input("Enter Email: ")
+    name = input("Enter Contacts Name: ").strip()
+    number = input("Enter Phone Number: ").strip()
+    email = input("Enter Email: ").strip()
+
+    #checks if a contact already exists with the same name
+    for contact in contacts:
+        if contact["name"].lower() == name.lower():
+            print("Contact with this name already exists.")
+            return
+
 
     #stores details in a dictionary and each detail has a key name, number, and email
     contact = {
@@ -116,10 +123,10 @@ def main():
     while True:
         print("1. Add Contact")
         print("2. View Contacts")
-        print("3. Exit")
-        print("4. Search Contact")
-        print("5. Edit Contact")
-        print("6. Delete Contact")
+        print("3. Search Contact")
+        print("4. Edit Contact")
+        print("5. Delete Contact")
+        print("6. Exit")
         #asks the user to enter their choice
         choice = input("Enter your choice: ")
 
@@ -129,14 +136,14 @@ def main():
         elif choice == "2":
             view_contacts()
         elif choice == "3":
+            search_contact()
+        elif choice == "4":
+            edit_contacts()
+        elif choice == "5":
+            delete_contact()
+        elif choice == "6":
             print("Exiting the program...")
             break
-        elif choice == "4":
-            search_contact()
-        elif choice == "5":
-            edit_contacts()
-        elif choice == "6":
-            delete_contact()
         else:
             print("Invalid choice. Please try again.")
 
