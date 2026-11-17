@@ -56,6 +56,38 @@ def search_contact():
     if not found:
         print("Contact not found.")
 
+def edit_contacts(): #this function allows the user to edit an existing contact
+
+
+    #asks which contact detail the user wants to edit
+    search_name = input("Enter the name of the contact you would like to edit:").strip()
+
+    for contact in contacts:
+
+        if contact["name"].lower() == search_name.lower():
+
+            print("Leave a field blank if you would like to keep the current detail.")
+
+            #asks for updated details
+            new_name = input("Enter new name: ").strip()
+            new_number = input("Enter new number: ").strip()
+            new_email = input("Enter new email: ").strip()
+
+
+            #updates only the fields that habe new details
+            if new_name:
+                contact["name"] = new_name
+            if new_number:
+                contact["number"] = new_number
+            if new_email:
+                contact["email"] = new_email
+                
+            print("Contact details have been updated.")
+            return
+        
+print("Contact not found.")
+
+
 #this function runs the program
 def main():
 
@@ -65,7 +97,7 @@ def main():
         print("2. View Contacts")
         print("3. Exit")
         print("4. Search Contact")
-        
+        print("5. Edit Contact")
         #asks the user to enter their choice
         choice = input("Enter your choice: ")
 
@@ -79,6 +111,8 @@ def main():
             break
         elif choice == "4":
             search_contact()
+        elif choice == "5":
+            edit_contacts()
         else:
             print("Invalid choice. Please try again.")
 
