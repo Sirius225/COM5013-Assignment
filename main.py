@@ -1,7 +1,8 @@
 contacts = [] #creates an empty list to store contacts
 
-def add_contacts(): #this function will ask the user for the contact details and saves new contacts
-    
+#this function will ask the user for the contact details and saves new contacts
+def add_contacts(): 
+
     #asks the user to enter details 
     name = input("Enter Contacts Name: ")
     number = input("Enter Phone Number: ")
