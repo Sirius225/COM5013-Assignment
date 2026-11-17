@@ -8,6 +8,12 @@ def add_contacts():
     number = input("Enter Phone Number: ").strip()
     email = input("Enter Email: ").strip()
 
+    #checks that none of the fields are empty
+    if not name or not number or not email:
+        print("All fields are required. Please Try again.")
+        return
+
+
     #checks if a contact already exists with the same name
     for contact in contacts:
         if contact["name"].lower() == name.lower():
@@ -21,7 +27,7 @@ def add_contacts():
         "number": number,
         "email": email
     }
-    #adds the contacts disctionary to the contacts list
+    #adds the new contact to the contact list
     contacts.append(contact)
     print("Contact Details Have Been Added")
 
