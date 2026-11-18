@@ -1,3 +1,4 @@
+import json
 
 # this class is used for creating contacts
 class Contact:
@@ -15,7 +16,45 @@ class ContactManager:
     # this will initialise an empty list to store contacts
     def __init__(self):
         self.contacts = []
+        self.filename = "contacts.json"
+    
+    #this function will save all contacts into a json file
+    def save_contacts(self):
+        data = []
 
+        #converts each Contact object into a dictionary and adds it to the data list
+        for contact in self.contacts:
+            data.append({
+                "name": contact.name,
+                "number": contact.number,
+                "email": contact.email
+            })
+        #this will write the contact details into the file    
+        with open(self.filename, "w") as file:
+            json.dump(data, file, indent=4)
+
+    #this function will load the contacts saved in the json file when the app starts        
+    def load_contacts(self):
+        try:
+            with open(self.filename, "r") as file:
+                data = json.load(file)
+
+            self.contacts = []
+
+            #this will convert each saved dictionary back into a Contact Object
+            for item in data:
+                contact = Contact(
+                    item["name"],
+                    item["number"],
+                    item["email"]
+
+                )
+                self.contacts.append(contact)
+
+        except FileNotFoundError:
+
+            #if the file does not exist, start with an empty contact list
+            self.contacts = []
     # this function will ask the user for contact details and save new contacts
     def add_contacts(self):
 
