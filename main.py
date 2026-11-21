@@ -14,6 +14,7 @@ class ContactManager:
     # this will initialise an empty list to store contacts
     def __init__(self):
         self.contacts = []
+        self.contact_lookup = {}
         self.filename = "contacts.json"
     
     #this function will save all contacts into a json file
@@ -49,6 +50,9 @@ class ContactManager:
                 )
                 self.contacts.append(contact)
 
+                #adds the contact to the dictionary using the name as a key
+                self.contact_lookup[contact.name.lower()] = contact
+
         except FileNotFoundError:
 
             #if the file does not exist, start with an empty contact list
@@ -77,7 +81,11 @@ class ContactManager:
 
         # adds the new contact to the contact list
         self.contacts.append(contact)
+        #adds the new contact to the dictionary
+        self.contact_lookup[name.lower()] = contact
+        #saves the contact details to the json file
         self.save_contacts()
+
         print("Contact Details Have Been Added")
 
     # this function displays the saved contacts in the list
@@ -155,6 +163,12 @@ class ContactManager:
                 if new_email:
                     contact.email = new_email
 
+                #removes the old details from the dictionary
+                self.contact_lookup.pop(search_name.lower(), None)
+
+                #adds the updates contact details to the dictionary
+                self.contact_lookup[contact.name.lower()] = contact
+
                 # saves the updated contact details to the json file
                 self.save_contacts()
 
@@ -178,6 +192,8 @@ class ContactManager:
 
                 # removes the matching contact from the contact list and updates the json file
                 self.contacts.remove(contact)
+
+                self.contact_lookup.pop(search_name.lower(), None)
                 
                 self.save_contacts()
 
