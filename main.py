@@ -79,6 +79,7 @@ class ContactManager:
 
         # adds the new contact to the contact list
         self.contacts.append(contact)
+        self.save_contacts()
         print("Contact Details Have Been Added")
 
     # this function displays the saved contacts in the list
@@ -187,7 +188,7 @@ def main():
 
     # creates a ContactManager object to manage all contacts
     manager = ContactManager()
-
+    manager.load_contacts()
     # keeps the menu displayed until the user makes a choice
     while True:
 
