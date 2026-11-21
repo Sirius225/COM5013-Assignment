@@ -1,5 +1,4 @@
 import json
-
 # this class is used for creating contacts
 class Contact:
 
@@ -8,7 +7,6 @@ class Contact:
         self.name = name
         self.number = number
         self.email = email
-
 
 # this class will manage all contacts in the app
 class ContactManager:
@@ -157,6 +155,9 @@ class ContactManager:
                 if new_email:
                     contact.email = new_email
 
+                # saves the updated contact details to the json file
+                self.save_contacts()
+
                 print("Contact details have been updated.")
                 return
 
@@ -175,8 +176,11 @@ class ContactManager:
             # runs a check to see if the name matches
             if contact.name.lower() == search_name.lower():
 
-                # removes the matching contact from the contact list
+                # removes the matching contact from the contact list and updates the json file
                 self.contacts.remove(contact)
+                
+                self.save_contacts()
+
                 print("Contact has been deleted.")
                 return
 
