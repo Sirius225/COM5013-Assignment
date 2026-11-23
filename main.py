@@ -125,53 +125,56 @@ class ContactManager:
         else:
             print("Contact not found.")
 
-    # this function allows the user to edit an existing contact
+
+    #this function allows the user to edit an existing contact
     def edit_contacts(self):
 
-        # asks which contact the user wants to edit
+        #asks which contact the user wants to edit
         search_name = input("Enter the name of the contact you would like to edit: ").strip()
 
-        # checks each contact in the list
-        for contact in self.contacts:
+        #finds the contact directly using the dictionary
+        contact = self.contact_lookup.get(search_name.lower())
 
-            if contact.name.lower() == search_name.lower():
+        #checks whether the contact exists
+        if contact is None:
+            print("Contact not found.")
+            return
 
-                print("Leave a field blank if you would like to keep the current detail.")
+        print("Leave a field blank if you would like to keep the current detail.")
 
-                # asks for updated details
-                new_name = input("Enter new name: ").strip()
-                new_number = input("Enter new number: ").strip()
-                new_email = input("Enter new email: ").strip()
+        #asks for updated details
+        new_name = input("Enter new name: ").strip()
+        new_number = input("Enter new number: ").strip()
+        new_email = input("Enter new email: ").strip()
 
-                # checks whether the new name is already being used
-                if new_name:
-                    for other_contact in self.contacts:
-                        if other_contact is not contact and other_contact.name.lower() == new_name.lower():
-                            print("Another contact already uses this name.")
-                            return
-
-                    contact.name = new_name
-
-                # updates only the fields that have new details
-                if new_number:
-                    contact.number = new_number
-
-                if new_email:
-                    contact.email = new_email
-
-                #removes the old details from the dictionary
-                self.contact_lookup.pop(search_name.lower(), None)
-
-                #adds the updates contact details to the dictionary
-                self.contact_lookup[contact.name.lower()] = contact
-
-                # saves the updated contact details to the json file
-                self.save_contacts()
-
-                print("Contact details have been updated.")
+        #checks whether the new name is already being used
+        if new_name:
+            if new_name.lower() in self.contact_lookup and new_name.lower() != search_name.lower():
+                print("Another contact already uses this name.")
                 return
 
-        # displays a message if the contact was not found
+            contact.name = new_name
+
+        #updates only the fields that have new details
+        if new_number:
+            contact.number = new_number
+
+        if new_email:
+            contact.email = new_email
+
+        #removes the old name from the dictionary
+        self.contact_lookup.pop(search_name.lower(), None)
+
+        #adds the updated name to the dictionary
+        self.contact_lookup[contact.name.lower()] = contact
+
+        #saves the updated contact details
+        self.save_contacts()
+
+        print("Contact details have been updated.")
+
+
+        #displays a message if the contact was not found
         print("Contact not found.")
 
     # this function will allow the user to delete a contact from the list
@@ -208,7 +211,7 @@ def main():
     # keeps the menu displayed until the user makes a choice
     while True:
 
-        print("CONTACTS MANAGEMENT APP")
+        print("Contacts Management App")
         print("1. Add Contact")
         print("2. View Contacts")
         print("3. Search Contact")
