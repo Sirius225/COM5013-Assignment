@@ -177,29 +177,31 @@ class ContactManager:
         #displays a message if the contact was not found
         print("Contact not found.")
 
-    # this function will allow the user to delete a contact from the list
+ 
+    #this function allows the user to delete a contact
     def delete_contact(self):
 
-        # asks the user to enter the name of the contact they want to delete
+        #asks which contact the user wants to delete
         search_name = input("Enter the name of the contact that you would like to delete: ").strip()
 
-        # checks each contact in the list
-        for contact in self.contacts:
+        #finds the contact directly using the dictionary
+        contact = self.contact_lookup.get(search_name.lower())
 
-            # runs a check to see if the name matches
-            if contact.name.lower() == search_name.lower():
+        #checks whether the contact exists
+        if contact is None:
+            print("Contact not found.")
+            return
 
-                # removes the matching contact from the contact list and updates the json file
-                self.contacts.remove(contact)
+        #removes the contact from the list
+        self.contacts.remove(contact)
 
-                self.contact_lookup.pop(search_name.lower(), None)
-                
-                self.save_contacts()
+        #removes the contact from the dictionary
+        self.contact_lookup.pop(search_name.lower(), None)
 
-                print("Contact has been deleted.")
-                return
+        #saves the updated contact details
+        self.save_contacts()
 
-        print("Contact not found.")
+        print("Contact has been deleted.")
 
 
 # this function runs the program
