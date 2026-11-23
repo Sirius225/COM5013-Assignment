@@ -57,33 +57,35 @@ class ContactManager:
 
             #if the file does not exist, start with an empty contact list
             self.contacts = []
-    # this function will ask the user for contact details and save new contacts
+
+    #this function asks the user for contact details and saves new contacts
     def add_contacts(self):
 
-        # asks the user to enter details
+        #asks the user to enter contact details
         name = input("Enter Contacts Name: ").strip()
         number = input("Enter Phone Number: ").strip()
         email = input("Enter Email: ").strip()
 
-        # checks that none of the fields are empty
+        #checks that none of the fields are empty
         if not name or not number or not email:
             print("All fields are required. Please try again.")
             return
 
-        # checks if a contact already exists with the same name
-        for contact in self.contacts:
-            if contact.name.lower() == name.lower():
-                print("Contact with this name already exists.")
-                return
+        #checks the dictionary for an existing contact with this name
+        if name.lower() in self.contact_lookup:
+            print("Contact with this name already exists.")
+            return
 
-        # creates a new contact object with the provided details
+        #creates a new contact object
         contact = Contact(name, number, email)
 
-        # adds the new contact to the contact list
+        #adds the new contact to the list
         self.contacts.append(contact)
+
         #adds the new contact to the dictionary
         self.contact_lookup[name.lower()] = contact
-        #saves the contact details to the json file
+
+        #saves the contact details to the JSON file
         self.save_contacts()
 
         print("Contact Details Have Been Added")
