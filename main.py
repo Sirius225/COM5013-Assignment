@@ -104,29 +104,23 @@ class ContactManager:
 
         # this displays each piece of information
 
-    # this function searches for a contact using their name
+   # this function searches for a contact using the dictionary
     def search_contact(self):
 
-        # asks the user to enter the name they want to look for
+        # asks the user to enter the name they want to find
         search_name = input("Enter the name that you would like to search for: ").strip()
 
-        # keeps track of whether a contact was found or not
-        found = False
+        # searches the dictionary using the contact name
+        contact = self.contact_lookup.get(search_name.lower())
 
-        # checks contacts in the contact list
-        for contact in self.contacts:
+        # checks whether the contact exists
+        if contact:
 
-            # compares names without worrying about capital letters
-            if search_name.lower() in contact.name.lower():
+            print("\nName:", contact.name)
+            print("Number:", contact.number)
+            print("Email:", contact.email)
 
-                print("\nName:", contact.name)
-                print("Number:", contact.number)
-                print("Email:", contact.email)
-
-                found = True
-
-        # displays a message if the contact was not found
-        if not found:
+        else:
             print("Contact not found.")
 
     # this function allows the user to edit an existing contact
