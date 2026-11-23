@@ -3,5 +3,10 @@
         "name": "harry",
         "number": "074982482359",
         "email": "example@example.com"
+    },
+    {
+        "name": "John Brown",
+        "number": "07111111111",
+        "email": "john@example.com"
     }
 ]
