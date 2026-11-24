@@ -178,11 +178,6 @@ class ContactManager:
 
         print("Contact details have been updated.")
 
-
-        #displays a message if the contact was not found
-        print("Contact not found.")
-
- 
     #this function allows the user to delete a contact
     def delete_contact(self):
 
