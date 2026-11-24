@@ -32,31 +32,36 @@ class ContactManager:
         with open(self.filename, "w") as file:
             json.dump(data, file, indent=4)
 
-    #this function will load the contacts saved in the json file when the app starts        
+
+    #this function loads contacts saved in the JSON file when the app starts
     def load_contacts(self):
         try:
             with open(self.filename, "r") as file:
                 data = json.load(file)
 
+            #clears existing contacts and dictionary entries
             self.contacts = []
+            self.contact_lookup = {}
 
-            #this will convert each saved dictionary back into a Contact Object
+            #converts each saved dictionary back into a Contact object
             for item in data:
                 contact = Contact(
                     item["name"],
                     item["number"],
                     item["email"]
-
                 )
+
                 self.contacts.append(contact)
 
-                #adds the contact to the dictionary using the name as a key
+                #adds the contact to the dictionary for fast searching
                 self.contact_lookup[contact.name.lower()] = contact
 
         except FileNotFoundError:
 
-            #if the file does not exist, start with an empty contact list
+            #starts with empty storage if the file does not exist
             self.contacts = []
+            self.contact_lookup = {}
+
 
     #this function asks the user for contact details and saves new contacts
     def add_contacts(self):
