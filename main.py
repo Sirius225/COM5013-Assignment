@@ -204,7 +204,7 @@ class ContactManager:
         print("Contact has been deleted.")
 
 
-# this function runs the program
+#this function runs the program
 def main():
 
     # creates a ContactManager object to manage all contacts
